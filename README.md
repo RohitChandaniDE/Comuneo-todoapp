@@ -2,6 +2,14 @@
 
 A recursive to-do list application built with **Remix.run**, **TypeScript**, and **Appwrite** as part of the Comuneo candidate assessment.
 
+***
+
+![Badge](https://img.shields.io/badge/PROJECT-LINK-orange)
+
+### [HERE](https://comuneo-todoapp.vercel.app/)
+
+***
+
 ## ✨ Features
 
 - **User Authentication**: Sign up and login with email/password via Appwrite
