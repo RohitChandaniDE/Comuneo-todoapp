@@ -1,30 +1,11 @@
 import { Resend } from 'resend';
 
-interface AppwriteRequest {
-  body: {
-    $id: string;
-    email: string;
-    name?: string;
-    registration: string;
-  };
-}
-
-interface AppwriteResponse {
-  json: (data: Record<string, unknown>) => void;
-}
-
-interface AppwriteContext {
-  req: AppwriteRequest;
-  res: AppwriteResponse;
-  log: (message: string) => void;
-  error: (message: string) => void;
-}
-
-export default async ({ req, res, log, error }: AppwriteContext) => {
+export default async ({ req, res, log, error }) => {
   const user = req.body;
 
   log(`New user registered: ${user.email}`);
 
+  // eslint-disable-next-line no-undef
   const resendApiKey = process.env.RESEND_API_KEY;
 
   if (!resendApiKey) {
@@ -36,6 +17,8 @@ export default async ({ req, res, log, error }: AppwriteContext) => {
   }
 
   const resend = new Resend(resendApiKey);
+  // eslint-disable-next-line no-undef
+  const appUrl = process.env.APP_URL || 'https://comuneo-todoapp.vercel.app';
 
   try {
     const { data, error: sendError } = await resend.emails.send({
@@ -95,7 +78,7 @@ export default async ({ req, res, log, error }: AppwriteContext) => {
                 <li>📱 Access your tasks from anywhere</li>
               </ul>
               <p>Ready to get started?</p>
-              <a href="${process.env.APP_URL}/todos" class="button">
+              <a href="${appUrl}/todos" class="button">
                 Start Adding Tasks
               </a>
             </div>
@@ -124,11 +107,10 @@ export default async ({ req, res, log, error }: AppwriteContext) => {
       emailId: data?.id,
     });
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    error(`Error sending email: ${errorMessage}`);
+    error(`Error sending email: ${err.message}`);
     return res.json({
       success: false,
-      message: errorMessage,
+      message: err.message,
     });
   }
 };
