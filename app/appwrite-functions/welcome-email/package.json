@@ -1,0 +1,14 @@
+{
+  "name": "welcome-email",
+  "version": "1.0.0",
+  "description": "Send welcome email to new users",
+  "main": "src/main.ts",
+  "type": "module",
+  "dependencies": {
+    "resend": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
